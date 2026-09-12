@@ -15,20 +15,27 @@ def build_parser():
     parser.add_argument("--timeout", type=int, default=None)
     parser.add_argument("--workers", type=int, default=None)
     parser.add_argument("--mode", default=None, choices=("strict", "lenient"))
-    parser.add_argument("--quiet", action="store_true",
-                        help="suppress the banner and the config summary")
+    parser.add_argument(
+        "--quiet",
+        action="store_true",
+        help="suppress the banner and the config summary",
+    )
     parser.add_argument("--version", action="store_true")
     return parser
 
 
 def _raw_from_args(args):
     raw = {}
+
     if args.timeout is not None:
         raw["timeout"] = args.timeout
+
     if args.workers is not None:
         raw["workers"] = args.workers
+
     if args.mode is not None:
         raw["mode"] = args.mode
+
     return raw
 
 
@@ -39,10 +46,14 @@ def main(argv=None):
         print(VERSION)
         return 0
 
-    print(BANNER)
+    print("DBG quiet:", args.quiet)
+
+    if not args.quiet:
+        print(BANNER)
 
     config = parse_config(_raw_from_args(args))
-    print(describe(config))
+    if not args.quiet:
+        print(describe(config))
 
     rows = [
         {"item": "pkg-01", "status": "ok", "note": "nothing to report"},
