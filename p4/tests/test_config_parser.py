@@ -10,6 +10,11 @@ def test_explicit_values_survive():
     assert config["mode"] == "lenient"
 
 
+def test_timeout_defaults_when_absent():
+    config = parse_config({"workers": 2})
+    assert config["timeout"] == 30
+
+
 def test_workers_default_when_absent():
     config = parse_config({"timeout": 5})
     assert config["workers"] == 4

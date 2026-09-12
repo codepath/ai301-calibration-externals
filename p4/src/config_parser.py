@@ -46,7 +46,7 @@ def parse_config(raw):
     if not isinstance(raw, dict):
         raise ConfigError("config must be a mapping, got %r" % type(raw).__name__)
 
-    timeout = int(raw.get("timeout"))
+    timeout = _as_int("timeout", raw.get("timeout", DEFAULT_TIMEOUT))
     workers = _as_int("workers", raw.get("workers", DEFAULT_WORKERS))
 
     if timeout <= 0:
