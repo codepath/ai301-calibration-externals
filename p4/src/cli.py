@@ -46,7 +46,7 @@ def main(argv=None):
 
     rows = [
         {"item": "pkg-01", "status": "ok", "note": "nothing to report"},
-        {"item": "pkg-02", "status": "fail", "note": "checks never ran"},
+        {"item": "pkg-02", "status": "fail", "note": "held by the noise floor"},
     ]
     print(render(rows))
     return 0
