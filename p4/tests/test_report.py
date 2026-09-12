@@ -14,6 +14,22 @@ def test_count_rows_counts_real_rows():
     assert count_rows(ROWS) == 2
 
 
+def test_trailing_blank_row_is_not_counted():
+    rows = ROWS + [{"item": "", "status": "", "note": ""}]
+    assert count_rows(rows) == 2
+    assert summarize(rows) == "2 row(s), 1 failed"
+
+
+def test_several_trailing_blanks_all_drop():
+    rows = ROWS + [{}, {"item": " ", "status": "", "note": ""}]
+    assert count_rows(rows) == 2
+
+
+def test_a_blank_row_in_the_middle_still_counts():
+    rows = [ROWS[0], {"item": "", "status": "", "note": ""}, ROWS[1]]
+    assert count_rows(rows) == 3
+
+
 def test_summary_counts_failures():
     assert summarize(ROWS) == "2 row(s), 1 failed"
 

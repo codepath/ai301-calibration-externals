@@ -26,8 +26,17 @@ def render_rows(rows):
 
 
 def count_rows(rows):
-    """How many rows this report actually carries."""
-    return len(rows)
+    """How many rows this report actually carries.
+
+    Callers assemble the list by appending, so a trailing blank row is a
+    normal artifact rather than a real result. Drop those from the end
+    before counting; blanks in the middle still count, because losing one
+    there would silently renumber everything after it.
+    """
+    end = len(rows)
+    while end > 0 and _is_blank(rows[end - 1]):
+        end -= 1
+    return end
 
 
 def summarize(rows):
