@@ -13,5 +13,5 @@ def normalize_path(raw):
     segments = collapsed.split("/")
     root = segments[0]
     if not root:
-        raise ValueError("path must not start with a separator: %r" % raw)
+        return "/" + "/".join([s for s in segments[1:] if s])
     return "/".join([root] + [s for s in segments[1:] if s])
