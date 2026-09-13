@@ -8,7 +8,8 @@ def page_bounds(total, page, per_page):
     lo = (page - 1) * per_page
     hi = lo + per_page
     if hi > total:
-        hi = total + 1
+        hi = total
+    print("DEBUG bounds", lo, hi)
     return lo, hi
 
 
