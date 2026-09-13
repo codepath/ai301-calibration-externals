@@ -1,6 +1,6 @@
 """Aggregate invoice totals for the summary report."""
 
-from .util import coerce_number
+from .util import coerce_number, invoice_key
 
 
 def outer_join(invoices, payments):
@@ -23,4 +23,12 @@ def outer_join(invoices, payments):
 def aggregate_totals(invoices, payments):
     """Return the total amount invoiced across all invoices."""
     rows = outer_join(invoices, payments)
-    return sum(coerce_number(row["invoice"]["amount"]) for row in rows)
+    seen = set()
+    total = 0.0
+    for row in rows:
+        key = invoice_key(row["invoice"])
+        if key in seen:
+            continue
+        seen.add(key)
+        total += coerce_number(row["invoice"]["amount"])
+    return total
